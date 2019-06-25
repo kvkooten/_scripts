@@ -20,9 +20,9 @@ var gulp = require('gulp'),
     notify  = require('gulp-notify'),
     browserSync = require('browser-sync').create();
 
-var siteName = 'aabbcc'; // set your siteName here
+var siteName = 'nieuwedokter_v1'; // set your siteName here
 var userName = 'kaz'; // set your macOS userName here
-var themeName = 'klantnaam' // set theme themeName. This needs fixing.
+var themeName = 'nieuwedokter' // set theme themeName. This needs fixing.
 
 var config = {
   bootstrapDir: './node_modules/bootstrap',
@@ -115,9 +115,9 @@ gulp.task('init', ['csscopy','bowerscripts','css', 'js'], function () {
 });
 
 gulp.task('default', ['bowerscripts','css', 'js'], function () {
-  gulp.watch("site/themes/pushplay/src/scss/*/*.scss", ['css']);
-  gulp.watch("site/themes/pushplay/src/scss/*/*.sass", ['css']);
-  gulp.watch("site/themes/pushplay/src/js/*.js", ['js']);
+  gulp.watch("site/themes/" + themeName + "/src/scss/*/*.scss", ['css']);
+  gulp.watch("site/themes/" + themeName + "/src/scss/*/*.sass", ['css']);
+  gulp.watch("site/themes/" + themeName + "/src/js/*.js", ['js']);
 });
 
 gulp.task('browsersync', ['bowerscripts','css', 'js'], function () {
