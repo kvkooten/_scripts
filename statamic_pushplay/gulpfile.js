@@ -2,9 +2,9 @@
 // Run 'valet link && valet secure'
 // Run 'yarn install'
 // Gulp tasks:
-// gulp init to prepare files for production
-// gulp browsersync for full browsersync experience
-// gulp (default) to watch css and js files
+// 'gulp init' to prepare files for production
+// 'gulp browsersync' for full browsersync experience
+// 'gulp' (default) to watch css and js files
 
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
@@ -27,7 +27,7 @@ var themeName = 'nieuwedokter' // set theme themeName. This needs fixing.
 var config = {
   bootstrapDir: './node_modules/bootstrap',
   publicDir: 'site/themes/' + themeName + '/',
-  srcDir: 'site/themes/' + themeName + '/src',
+  srcDir: 'site/themes/' + themeName + '/src'
 };
 
 var banner = [
@@ -114,6 +114,21 @@ gulp.task('init', ['csscopy','bowerscripts','css', 'js'], function () {
   // Nothing to see here
 });
 
+var htmlWatch = [
+  ["site/themes/" + themeName + "/partials/**/*.html"],
+  ["site/themes/" + themeName + "/layouts/**/*.html"],
+  ["site/themes/" + themeName + "/templates/**/*.html"]
+]
+var mdWatch = [
+  ["site/content/collections/**/*.md"],
+  ["site/content/pages/**/*.md"]
+]
+var cssWatch = [
+  "site/themes/" + themeName + "/src/scss/*/*.scss",
+  "site/themes/" + themeName + "/src/scss/*/*.sass"
+]
+var jsWatch = "site/themes/" + themeName + "/src/js/*.js"
+
 gulp.task('default', ['bowerscripts','css', 'js'], function () {
   gulp.watch("site/themes/" + themeName + "/src/scss/*/*.scss", ['css']);
   gulp.watch("site/themes/" + themeName + "/src/scss/*/*.sass", ['css']);
@@ -142,16 +157,9 @@ gulp.task('browsersync', ['bowerscripts','css', 'js'], function () {
     }
   });
 
-  var watchlist = [
-    "site/themes/" + themeName + "/src/scss/*/*.scss", ['css'],
-    "site/themes/" + themeName + "/src/scss/*/*.sass", ['css'],
-    "site/themes/" + themeName + "/src/js/*.js", ['js'],
-    ["site/content/collections/**/*.md"],
-    ["site/content/pages/**/*.md"],
-    ["site/themes/" + themeName + "/partials/**/*.html"],
-    ["site/themes/" + themeName + "/layouts/**/*.html"],
-    ["site/themes/" + themeName + "/templates/**/*.html"]
-  ];
-  gulp.watch(watchlist, ['css', 'js']).on('change', browserSync.reload);
+  gulp.watch(cssWatch, ['css']).on('change', browserSync.reload);
+  gulp.watch(jsWatch, ['js']).on('change', browserSync.reload);
+  gulp.watch(mdWatch).on('change', browserSync.reload);
+  gulp.watch(htmlWatch).on('change', browserSync.reload);
 
 }); // gulp.task('browsersync')...
